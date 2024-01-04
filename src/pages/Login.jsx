@@ -4,8 +4,13 @@ import { useAuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
 
 const Login = () => {
-  const { signIn } = useAuthContext();
-
+  //* consuming context
+  const { signIn, signUpProvider, forgotPassword } = useAuthContext();
+  //* ayrı stateler
+  // const [email, setEmail] = useState();
+  // const [password, setPassword] = useState();
+  //! inputlarla çalışıyorsak statelerin ilk değeri null veya undefined olmamalı
+  //* birleştirilmiş state
   const [info, setInfo] = useState({
     email: "",
     password: "",
@@ -22,7 +27,7 @@ const Login = () => {
 
   return (
     <div className="flex justify-center">
-      <div className="overflow-hidden flex-1 h-screen justify-center items-center dark:bg-gray-dark-main">
+      <div className="overflow-hidden flex-1 justify-center items-center ">
         <div className={`form-container mt-[5vh] w-[380px] h-[500px] `}>
           <form onSubmit={handleSubmit}>
             <h2 className="text-red-main text-2xl font-[500] text-center tracking-[0.1em] mb-3">
@@ -51,7 +56,10 @@ const Login = () => {
               <label htmlFor="floating_password">Password</label>
             </div>
             <div className="flex justify-between">
-              <span className="py-3 font-[0.75em] cursor-pointer decoration-none text-gray-500 hover:text-[#ff4b45]">
+              <span
+                className="py-3 font-[0.75em] cursor-pointer decoration-none text-gray-500 hover:text-[#ff4b45]"
+                onClick={() => forgotPassword(info.email)}
+              >
                 Forgot Password
               </span>
               <Link
@@ -67,6 +75,7 @@ const Login = () => {
             <button
               className="flex justify-between text-center items-center btn-danger"
               type="button"
+              onClick={signUpProvider}
             >
               Continue with Google
               <GoogleIcon color="currentColor" />

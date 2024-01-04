@@ -3,15 +3,16 @@ import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { Link } from "react-router-dom";
 import avatar from "../assets/icons/avatar.png";
 import Switch from "./Switch";
+import { useAuthContext } from "../context/AuthContext";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navbar() {
-  const currentUser = { displayName: "felix Franko" };
+  // const currentUser = { displayName: "felix franko" };
+  const { logOut, currentUser } = useAuthContext();
   // const currentUser = false;
-
   return (
     <>
       <Disclosure
@@ -27,7 +28,7 @@ export default function Navbar() {
             {/* right content */}
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
               {currentUser && (
-                <h5 className="mr-2 capitalize">{currentUser?.displayName}</h5>
+                <h5 className="mr-2 capitalize">{currentUser?.displayName} </h5>
               )}
               <Switch />
               {/* Profile dropdown */}
@@ -40,6 +41,7 @@ export default function Navbar() {
                       className="h-8 w-8 rounded-full"
                       src={currentUser?.photoURL || avatar}
                       alt="user"
+                      // dış linklerden alacağımız resimler güvenlik nedeniyle görünmeyebilir, bunu aşmak için ekliyoruz
                       referrerPolicy="no-referrer"
                     />
                   </Menu.Button>
@@ -84,18 +86,21 @@ export default function Navbar() {
                         </Menu.Item>
                       </>
                     )}
-                    <Menu.Item>
-                      {({ active }) => (
-                        <span
-                          className={classNames(
-                            active ? "bg-gray-100" : "",
-                            "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
-                          )}
-                        >
-                          Logout
-                        </span>
-                      )}
-                    </Menu.Item>
+                    {currentUser && (
+                      <Menu.Item>
+                        {({ active }) => (
+                          <span
+                            className={classNames(
+                              active ? "bg-gray-100" : "",
+                              "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
+                            )}
+                            onClick={logOut}
+                          >
+                            Logout
+                          </span>
+                        )}
+                      </Menu.Item>
+                    )}
                   </Menu.Items>
                 </Transition>
               </Menu>
