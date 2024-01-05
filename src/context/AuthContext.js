@@ -14,7 +14,6 @@ import { useNavigate } from "react-router-dom";
 import { toastErrorNotify, toastSuccessNotify } from "../helpers/ToastNotify";
 
 export const AuthContext = createContext();
-// const {Provider} = createContext()
 
 //* with custom hook
 export const useAuthContext = () => {
@@ -43,7 +42,6 @@ const AuthContextProvider = ({ children }) => {
       await updateProfile(auth.currentUser, {
         displayName: displayName,
       });
-      // console.log(userCredential);
       navigate("/");
       toastSuccessNotify("Registered successfully!");
     } catch (error) {
@@ -63,7 +61,6 @@ const AuthContextProvider = ({ children }) => {
         email,
         password
       );
-      // console.log(userCredential);
       navigate("/");
       toastSuccessNotify("Logged in successfully!");
     } catch (error) {

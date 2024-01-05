@@ -10,9 +10,7 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
-  // const currentUser = { displayName: "felix franko" };
   const { logOut, currentUser } = useAuthContext();
-  // const currentUser = false;
   return (
     <>
       <Disclosure
@@ -91,7 +89,7 @@ export default function Navbar() {
                         {({ active }) => (
                           <span
                             className={classNames(
-                              active ? "bg-gray-100" : "",
+                              active ? "bg-gray-200" : "",
                               "block px-4 py-2 text-sm text-gray-700 cursor-pointer"
                             )}
                             onClick={logOut}
